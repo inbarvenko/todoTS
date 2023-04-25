@@ -1,0 +1,11 @@
+.title {
+  font-size: 12px;
+  color: rgb(73, 73, 73);
+}
+
+.selector {
+  font-family:'Montserrat', sans-serif;
+  
+  width: 50%;
+  height: 25px;
+}
