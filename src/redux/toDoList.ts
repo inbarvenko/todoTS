@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { todoType, filterEnum } from './types';
+import { todoType, filterEnum } from '../types';
 import { localStorageTools } from "../localStorage";
 
 const initialState = {
   toDoList: [] as todoType[],
   filter: filterEnum.all,
-  // filter: localStorageTools.getItemFromLocalStorage('filter'),
-  // toDoList: localStorageTools.getItemFromLocalStorage('todo'),
 }
 
 const toDoList = createSlice({

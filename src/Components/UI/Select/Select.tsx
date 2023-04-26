@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './Select.module.css'
 import { FILTER_OPTIONS } from "../../../constants";
-import { filterEnum } from "../../../redux/types";
+import { filterEnum } from "../../../types";
 import { useAppDispatch } from "../../../redux/store";
 import { changeFilter } from "../../../redux/toDoList";
 

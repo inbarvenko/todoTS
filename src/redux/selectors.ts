@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { todoType, filterEnum } from "./types";
+import { todoType, filterEnum } from "../types";
 
 export const  currentToDoList = (state : { todoData: { toDoList: todoType[] } }) => state.todoData.toDoList;
 

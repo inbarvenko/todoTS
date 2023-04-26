@@ -3,7 +3,7 @@ import styles from './TasksWithFilter.module.css'
 import Select from "../UI/Select/Select";
 import TaskList from "../TaskList/TaskList";
 import { useSelector } from 'react-redux';
-import { filterEnum } from '../../redux/types';
+import { filterEnum } from '../../types';
 import { localStorageTools } from '../../localStorage';
 
 

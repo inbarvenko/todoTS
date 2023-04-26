@@ -4,7 +4,7 @@ import InputForm from "../UI/InputForm/InputForm";
 import styles from './Task.module.css';
 import { useAppDispatch } from "../../redux/store";
 import { changeTitleTask, changeStatusTask, removeTask } from "../../redux/toDoList";
-import { todoType } from "../../redux/types";
+import { todoType } from "../../types";
 
 interface TaskProp {
   task: todoType,
