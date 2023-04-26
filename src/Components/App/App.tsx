@@ -2,24 +2,24 @@ import { useMemo, useEffect } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import styles from './App.module.css'
-import { useSelector } from "react-redux";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
 import { currentToDoList } from "../../redux/selectors";
-import { localStorageTools } from "../../localStorage";
+import { LocalStorageTools } from "../../localStorage";
 import { addTask } from "../../redux/toDoList";
-import { useAppDispatch } from "../../redux/store";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 
 const App: React.FC = () => {
 
-  const toDoList = useSelector(currentToDoList);
+  const toDoList = useAppSelector(currentToDoList);
+
   const dispatch = useAppDispatch();
 
   useEffect(() =>
-    localStorageTools.setItemToLocalStorage('todo', toDoList),
+    LocalStorageTools.setItemToLocalStorage('todo', toDoList),
     [toDoList]);
 
   const activeTasks = useMemo(() => {
-    const arr = toDoList.filter((item: {done: boolean}) => !item.done);
+    const arr = toDoList.filter((item) => !item.done);
     return arr.length;
   }, [toDoList]);
 
@@ -33,11 +33,10 @@ const App: React.FC = () => {
   return (
     <div className={styles.components}>
       <TitleNumber
-        showText="Сколько задач осталось:"
+        showText="How many tasks are active:"
         showNum={activeTasks}
       />
       <InputForm
-        isButtonDisabled={false}
         taskTitle=""
         onClickSave={newTask}
         buttonName="Add"

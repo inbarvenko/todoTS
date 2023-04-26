@@ -1,23 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { todoType, filterEnum } from '../types';
-import { localStorageTools } from "../localStorage";
+import { ToDoType, FilterEnum } from '../types';
 
-const initialState = {
-  toDoList: [] as todoType[],
-  filter: filterEnum.all,
+type InitialState = {
+  toDoList: ToDoType[];
+  filter: FilterEnum;
+}
+
+const initialState: InitialState = {
+  toDoList: [],
+  filter: FilterEnum.all,
 }
 
 const toDoList = createSlice({
   name: 'ToDoList',
   initialState,
   reducers: {
-    changeFilter: (state, action: PayloadAction<filterEnum>) => {
+    changeFilter: (state, action: PayloadAction<FilterEnum>) => {
       state.filter = action.payload;
     },
     addTask: (state, action: PayloadAction<string>) => {
-      const newTask: todoType = {
-        title: action.payload,
+      const titleTrim = action.payload.trim();
+
+      const newTask: ToDoType = {
+        title: titleTrim,
         done: false,
         id: Date.now(),
       };
@@ -41,7 +47,7 @@ const toDoList = createSlice({
     ) => {
       state.toDoList.forEach((item) => {
         if (item.id === action.payload.id) {
-          item.title = action.payload.title;
+          item.title = action.payload.title.trim();
         }
         return item;
       });

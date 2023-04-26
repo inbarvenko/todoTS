@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import styles from './Task.module.css';
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch } from "../../redux/hooks";
 import { changeTitleTask, changeStatusTask, removeTask } from "../../redux/toDoList";
-import { todoType } from "../../types";
+import { ToDoType } from "../../types";
 
-interface TaskProp {
-  task: todoType,
+interface Props {
+  task: ToDoType;
 }
 
-const Task = (props: TaskProp) => {
+const Task : React.FC<Props> = (props) => {
   const [edit, setEdit] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -20,8 +20,9 @@ const Task = (props: TaskProp) => {
   }
 
   const changeTitle = (title: string) => {
-    if (title) {
-      dispatch(changeTitleTask({ id: props.task.id, title }));
+    const titleTrim = title.trim();
+    if (titleTrim) {
+      dispatch(changeTitleTask({ id: props.task.id, title: titleTrim }));
     }
     editTask();
   }
@@ -30,7 +31,7 @@ const Task = (props: TaskProp) => {
     dispatch(changeStatusTask(props.task.id));
   }
 
-  const onButtonClick = (event: React.SyntheticEvent) => {
+  const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     dispatch(removeTask(props.task.id));
   }
@@ -59,7 +60,6 @@ const Task = (props: TaskProp) => {
           </p>
         </>}
       <Button
-        isButtonDisabled={false}
         onClick={onButtonClick}
         title="Delete"
       />

@@ -1,6 +1,4 @@
-import { filterEnum, todoType } from "./types";
-
-export class localStorageTools {
+export class LocalStorageTools {
   static setItemToLocalStorage<T>(name: string, value: T): void {
     localStorage.setItem(name, JSON.stringify(value));
   }

@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import styles from './TasksWithFilter.module.css'
 import Select from "../UI/Select/Select";
 import TaskList from "../TaskList/TaskList";
-import { useSelector } from 'react-redux';
-import { filterEnum } from '../../types';
-import { localStorageTools } from '../../localStorage';
+import { LocalStorageTools } from '../../localStorage';
+import { useAppSelector } from '../../redux/hooks';
+import { currentFilter } from '../../redux/selectors';
 
 
 const TasksWithFilter: React.FC = () => {
-  const selectedFilter = useSelector((state : { todoData: { filter: filterEnum } }) => state.todoData.filter);
+  const selectedFilter = useAppSelector(currentFilter);
 
   useEffect(()=>{
-    localStorageTools.setItemToLocalStorage('filter', selectedFilter);
+    LocalStorageTools.setItemToLocalStorage('filter', selectedFilter);
   }, [selectedFilter])
 
 

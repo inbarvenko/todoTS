@@ -1,10 +1,10 @@
-export type todoType = {
+export type ToDoType = {
   id: number;
   title: string;
   done: boolean;
 };
 
-export enum filterEnum {
+export enum FilterEnum {
   all = 'all',
   active = 'active',
   completed = 'completed',

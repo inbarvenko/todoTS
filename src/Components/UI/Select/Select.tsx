@@ -1,26 +1,26 @@
 import React from "react";
 import styles from './Select.module.css'
 import { FILTER_OPTIONS } from "../../../constants";
-import { filterEnum } from "../../../types";
-import { useAppDispatch } from "../../../redux/store";
+import { FilterEnum } from "../../../types";
+import { useAppDispatch } from "../../../redux/hooks";
 import { changeFilter } from "../../../redux/toDoList";
 
-interface SelectProps {
-  value: filterEnum,
+interface Props {
+  value: FilterEnum;
 }
 
-function Select(props: SelectProps) {
+const Select: React.FC<Props> = (props) => {
 
   const dispatch = useAppDispatch();
 
   const stringToFilterEnum = (str: string) => {
-    switch (str){
-      case filterEnum.active:
-        return dispatch(changeFilter(filterEnum.active));
-      case filterEnum.completed:
-        return dispatch(changeFilter(filterEnum.completed));
+    switch (str) {
+      case FilterEnum.active:
+        return dispatch(changeFilter(FilterEnum.active));
+      case FilterEnum.completed:
+        return dispatch(changeFilter(FilterEnum.completed));
       default:
-        return dispatch(changeFilter(filterEnum.all)); 
+        return dispatch(changeFilter(FilterEnum.all));
     }
   }
 

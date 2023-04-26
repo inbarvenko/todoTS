@@ -1,20 +1,23 @@
 import React from 'react';
 import styles from './Button.module.css'
+import { StyledButton } from '../../../styles/styled-components';
 
-interface ButtonProps {
-  title: string,
-  isButtonDisabled: boolean,
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+interface Props {
+  title: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  isButtonDisabled?: boolean;
 }
 
-function Button(props: ButtonProps) {
-
+const Button: React.FC<Props> = (props) => {
+  const {
+    isButtonDisabled = false,
+  } = props;
   return (
-    <button
-      className={`${styles.button} ${props.isButtonDisabled ? styles.buttonHidden : ''}`}
+    <StyledButton
+      isButtonDisabled={isButtonDisabled}
       onClick={props.onClick}>
       {props.title}
-    </button>
+    </StyledButton>
   );
 }
 

@@ -1,19 +1,20 @@
 import { createSelector } from "reselect";
-import { todoType, filterEnum } from "../types";
+import { FilterEnum } from "../types";
+import { RootState } from "./hooks";
 
-export const  currentToDoList = (state : { todoData: { toDoList: todoType[] } }) => state.todoData.toDoList;
+export const  currentToDoList = (state : RootState) => state.todoData.toDoList;
 
-export const currentFilter = (state : { todoData: { filter: string } }) => state.todoData.filter;
+export const currentFilter = (state : RootState) => state.todoData.filter;
 
  
 export const filteredToDoList = createSelector(
   [currentToDoList, currentFilter],
   (todo, filter) => {
     switch (filter) {
-      case filterEnum.active:
-        return todo.filter((item: {done: boolean}) => !item.done);
-      case filterEnum.completed:
-        return todo.filter((item: {done: boolean}) => item.done);
+      case FilterEnum.active:
+        return todo.filter((item) => !item.done);
+      case FilterEnum.completed:
+        return todo.filter((item) => item.done);
       default:
         return todo;
     }

@@ -4,7 +4,7 @@ import styles from './TaskList.module.css';
 import { useSelector } from "react-redux";
 import { filteredToDoList } from "../../redux/selectors";
 
-const TaskList = () => {
+const TaskList:React.FC = () => {
 
   const filteredToDos = useSelector(filteredToDoList);
 

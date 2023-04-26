@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import Button from '../Button/Button';
 import styles from './InputForm.module.css'
+type AvailableButtonTypes = 'edit' | 'delete';
 
-interface InputProps {
-  taskTitle: string,
-  buttonName: string,
-  onClickSave: (title: string) => void,
-  isButtonDisabled: boolean,
+interface Props {
+  taskTitle: string;
+  onClickSave: (title: string) => void;
+  isButtonDisabled?: boolean;
+  buttonName?: string;
+  buttonType?: AvailableButtonTypes;
 }
 
-const InputForm = (props: InputProps) => {
+const InputForm: React.FC<Props> = (props) => {
+  const {
+    buttonName = '',
+  } = props;
 
   const [title, setTitle] = useState(props.taskTitle);
 
   const saveTaskTitle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
 
     props.onClickSave(title);
     setTitle('');
@@ -34,7 +38,7 @@ const InputForm = (props: InputProps) => {
     <form className={styles.inputForm}>
       <input
         className={
-          `${styles.input} ${(props.buttonName === "Edit") ? styles.inputEdit : ''}`}
+          `${styles.input} ${(props.buttonType === 'edit') ? styles.inputEdit : ''}`}
         autoFocus={true}
         type="text"
         value={title}
@@ -44,7 +48,7 @@ const InputForm = (props: InputProps) => {
       <Button
         isButtonDisabled={props.isButtonDisabled}
         onClick={saveTaskTitle}
-        title={props.buttonName}
+        title={buttonName}
       />
     </form>
   )

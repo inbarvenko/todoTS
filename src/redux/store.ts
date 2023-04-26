@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import { localStorageTools } from '../localStorage';
+import { LocalStorageTools } from '../localStorage';
 import todoReducer from './toDoList'
-import { filterEnum } from '../types';
+import { FilterEnum } from '../types';
 
 
 const store = configureStore({
@@ -12,14 +12,10 @@ const store = configureStore({
   },
   preloadedState: {
     todoData: {
-      toDoList: localStorageTools.getItemFromLocalStorage('todo', []),
-      filter: localStorageTools.getItemFromLocalStorage('filter', filterEnum.all)
+      toDoList: LocalStorageTools.getItemFromLocalStorage('todo', []),
+      filter: LocalStorageTools.getItemFromLocalStorage('filter', FilterEnum.all)
     }
   },
 });
-
-type AppDispatchType = typeof store.dispatch;
-
-export const useAppDispatch: () => AppDispatchType = useDispatch;
 
 export default store;
