@@ -1,6 +1,18 @@
 import React from 'react';
-import styles from './Button.module.css'
-import { StyledButton } from '../../../styles/styled-components';
+import styled from 'styled-components';
+
+const StyledButton = styled.button<{isButtonDisabled?: boolean}>`
+  border: #f8bfb3;
+  width: 60px;
+  height: 30px;
+
+  margin-right: 15px;
+  margin-left: 15px;
+
+  background-color: #ffd3c9;
+
+  display: ${(props) => props.isButtonDisabled ? 'none' : 'display'};
+`;
 
 interface Props {
   title: string;

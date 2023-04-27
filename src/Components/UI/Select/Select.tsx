@@ -1,9 +1,17 @@
 import React from "react";
-import styles from './Select.module.css'
 import { FILTER_OPTIONS } from "../../../constants";
 import { FilterEnum } from "../../../types";
 import { useAppDispatch } from "../../../redux/hooks";
 import { changeFilter } from "../../../redux/toDoList";
+import styled from "styled-components";
+
+const SelectStyled = styled.select`
+  font-family:'Montserrat', sans-serif;
+  
+  width: 50%;
+  height: 25px;
+`
+
 
 interface Props {
   value: FilterEnum;
@@ -25,8 +33,7 @@ const Select: React.FC<Props> = (props) => {
   }
 
   return (
-    <select
-      className={styles.selector}
+    <SelectStyled
       value={props.value}
       onChange={(e) => stringToFilterEnum(e.target.value)}
     >
@@ -38,7 +45,7 @@ const Select: React.FC<Props> = (props) => {
           {option.name}
         </option>
       })}
-    </select>
+    </SelectStyled>
   );
 }
 

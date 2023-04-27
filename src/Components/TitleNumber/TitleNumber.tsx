@@ -1,5 +1,24 @@
 import React from 'react';
-import styles from './TitleNumber.module.css'
+import styled from 'styled-components';
+
+const NameStyled = styled.h3`
+  text-align: center;
+
+  font-size: 20px;
+`;
+
+const NumberStyled = styled.h2`
+  padding-left: 20px;
+  color: rgb(252, 141, 113);
+`;
+
+const TitleStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  padding-bottom: 20px;
+`
 
 interface Props {
   showText: string;
@@ -8,10 +27,10 @@ interface Props {
 
 const TitleNumber: React.FC<Props> = (props) => {
   return (
-    <div className={styles.title}>
-      <h3 className={styles.title__name}>{props.showText}</h3>
-      <h2 className={styles.title__number}>{props.showNum}</h2>
-    </div>
+    <TitleStyled>
+      <NameStyled>{props.showText}</NameStyled>
+      <NumberStyled>{props.showNum}</NumberStyled>
+    </TitleStyled>
   );
 }
 

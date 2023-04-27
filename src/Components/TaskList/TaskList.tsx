@@ -1,15 +1,41 @@
 import React from "react";
 import Task from "../Task/Task";
-import styles from './TaskList.module.css';
 import { useSelector } from "react-redux";
 import { filteredToDoList } from "../../redux/selectors";
+import styled from "styled-components";
+
+const Explanations = styled.p`
+  margin-top: 20px;
+
+  color: rgb(143, 141, 141);
+  font-size: 16px;
+  text-align: center;
+  overflow-x: auto;
+  word-wrap: break-word;
+
+  @media screen and (max-width: 400px) {
+    font-size: 12px;
+  }
+`;
+
+const Container = styled.ul`
+  width: 100%;
+  padding: 0;
+  padding-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
 
 const TaskList:React.FC = () => {
 
   const filteredToDos = useSelector(filteredToDoList);
 
   return (
-    <ul className={styles.container}>
+    <Container>
       {filteredToDos.length
         ?
         filteredToDos.map((item) => {
@@ -17,15 +43,15 @@ const TaskList:React.FC = () => {
             task={item}
             key={item.id} />
         })
-        : <p className={styles.noTasks}>No tasks</p>
+        : <Explanations>No tasks</Explanations>
       }
       {filteredToDos.length
-        ? <div className={styles.explanations}>
-          <p>To edit task use doubleclick on chosen one.</p>
-          <p>To save edit of task press Enter, to cancel push mouse somewhere else.</p>
-        </div>
+        ? <Explanations>
+            To edit task use doubleclick on chosen one. 
+            To save edit of task press Enter, to cancel push mouse somewhere else.
+          </Explanations>
         : null}
-    </ul>
+    </Container>
   );
 }
 

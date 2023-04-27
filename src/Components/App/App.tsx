@@ -7,6 +7,26 @@ import { currentToDoList } from "../../redux/selectors";
 import { LocalStorageTools } from "../../localStorage";
 import { addTask } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import styled, {createGlobalStyle} from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+  }
+`;
+
+const ComponentsStyled = styled.div`
+  font-family:'Montserrat', sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-evenly;
+
+  padding-bottom: 30px;
+`;
+
+
 
 const App: React.FC = () => {
 
@@ -31,7 +51,8 @@ const App: React.FC = () => {
 
 
   return (
-    <div className={styles.components}>
+    <ComponentsStyled>
+      <GlobalStyle/>
       <TitleNumber
         showText="How many tasks are active:"
         showNum={activeTasks}
@@ -43,7 +64,7 @@ const App: React.FC = () => {
       />
       <TasksWithFilter
       />
-    </div>
+    </ComponentsStyled>
   );
 }
 

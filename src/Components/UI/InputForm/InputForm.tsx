@@ -1,7 +1,30 @@
 import React, { useState } from 'react';
 import Button from '../Button/Button';
-import styles from './InputForm.module.css'
-type AvailableButtonTypes = 'edit' | 'delete';
+import styled from 'styled-components';
+import { css } from 'styled-components';
+import { AvailableButtonTypes } from '../../../types';
+
+const InputStyled = styled.input<{buttonType: AvailableButtonTypes}>`
+  font-family:'Montserrat', sans-serif;
+  font-size: 16px;
+  flex-grow: 1;
+  
+  height: 20px;
+  word-wrap: break-word;
+
+  ${props => (props.buttonType === 'edit') && css`
+    background-color: #fffaf9;
+    text-align: center;
+  `}
+`;
+
+const FormStyled = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content:space-evenly;
+  flex: 1 auto;
+`
+
 
 interface Props {
   taskTitle: string;
@@ -14,6 +37,7 @@ interface Props {
 const InputForm: React.FC<Props> = (props) => {
   const {
     buttonName = '',
+    buttonType = 'delete',
   } = props;
 
   const [title, setTitle] = useState(props.taskTitle);
@@ -35,22 +59,21 @@ const InputForm: React.FC<Props> = (props) => {
 
 
   return (
-    <form className={styles.inputForm}>
-      <input
-        className={
-          `${styles.input} ${(props.buttonType === 'edit') ? styles.inputEdit : ''}`}
+    <FormStyled>
+      <InputStyled
         autoFocus={true}
         type="text"
         value={title}
         onChange={changingTitle}
         onBlur={returnValue}
-      ></input>
+        buttonType = {buttonType}
+      ></InputStyled>
       <Button
         isButtonDisabled={props.isButtonDisabled}
         onClick={saveTaskTitle}
         title={buttonName}
       />
-    </form>
+    </FormStyled>
   )
 }
 

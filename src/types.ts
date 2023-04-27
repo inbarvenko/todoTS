@@ -9,3 +9,5 @@ export enum FilterEnum {
   active = 'active',
   completed = 'completed',
 };
+
+export type AvailableButtonTypes = 'edit' | 'delete';
