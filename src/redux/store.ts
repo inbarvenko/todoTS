@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
 import { LocalStorageTools } from '../localStorage';
 import todoReducer from './toDoList'
 import { FilterEnum } from '../types';

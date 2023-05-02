@@ -1,30 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Button/Button';
-import styled from 'styled-components';
-import { css } from 'styled-components';
 import { AvailableButtonTypes } from '../../../types';
-
-const InputStyled = styled.input<{buttonType: AvailableButtonTypes}>`
-  font-family:'Montserrat', sans-serif;
-  font-size: 16px;
-  flex-grow: 1;
-  
-  height: 20px;
-  word-wrap: break-word;
-
-  ${props => (props.buttonType === 'edit') && css`
-    background-color: #fffaf9;
-    text-align: center;
-  `}
-`;
-
-const FormStyled = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content:space-evenly;
-  flex: 1 auto;
-`
-
+import { InputFormWrapper } from './InputFormWrapper';
 
 interface Props {
   taskTitle: string;
@@ -59,21 +36,23 @@ const InputForm: React.FC<Props> = (props) => {
 
 
   return (
-    <FormStyled>
-      <InputStyled
+    <InputFormWrapper
+      buttonType = {buttonType}
+    >
+      <input
+        className='inputForm'
         autoFocus={true}
         type="text"
         value={title}
         onChange={changingTitle}
         onBlur={returnValue}
-        buttonType = {buttonType}
-      ></InputStyled>
+      ></input>
       <Button
         isButtonDisabled={props.isButtonDisabled}
         onClick={saveTaskTitle}
         title={buttonName}
       />
-    </FormStyled>
+    </InputFormWrapper>
   )
 }
 

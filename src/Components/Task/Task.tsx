@@ -4,50 +4,7 @@ import InputForm from "../UI/InputForm/InputForm";
 import { useAppDispatch } from "../../redux/hooks";
 import { changeTitleTask, changeStatusTask, removeTask } from "../../redux/toDoList";
 import { ToDoType } from "../../types";
-import styled, {css} from "styled-components";
-
-const TaskStyled = styled.li`
-  width: 100%;
-    
-  padding-bottom: 15px;
-  padding-top: 15px;
-  height: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content:center;
-  overflow: hidden;
-
-  flex: 1 auto;
-`;
-
-const InputStyled = styled.input`
-  margin-left: 15px;
-  margin-right: 15px;
-
-  min-width: 20px;
-  min-height: 20px;
-  cursor: pointer;
-
-  box-shadow: 0 3px 3px rgba(0,0,0,0.15);
-
-  @media screen and (max-width: 400px) {
-    min-width: 15px;
-    min-height: 15px;
-  }
-`;
-
-const TextStyled = styled.p<{task: ToDoType}>`
-  text-align: center;
-  flex-grow: 1;
-  overflow-x: auto;
-  word-wrap: break-word;
-
-  ${props => props.task.done && css`
-    color: grey;
-    text-decoration: line-through;
-  `}
-`;
+import { TaskWrapper } from "./TaskWrapper";
 
 
 interface Props {
@@ -81,8 +38,11 @@ const Task : React.FC<Props> = (props) => {
   }
 
   return (
-    <TaskStyled>
-      <InputStyled
+    <TaskWrapper
+      isDone={props.task.done}
+    >
+      <input
+        className="input"
         type="checkbox"
         checked={props.task.done}
         onChange={doneTask} />
@@ -95,18 +55,17 @@ const Task : React.FC<Props> = (props) => {
           buttonType="edit"
         />
         : <>
-          <TextStyled
-            task={props.task}
+          <p 
             onDoubleClick={editTask}
-          >
+            className="text">
             {props.task.title}
-          </TextStyled>
+          </p>
         </>}
       <Button
         onClick={onButtonClick}
         title="Delete"
       />
-    </TaskStyled>
+    </TaskWrapper>
   )
 }
 
