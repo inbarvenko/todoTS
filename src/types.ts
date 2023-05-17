@@ -1,7 +1,8 @@
 export type ToDoType = {
+  userID: number;
   id: number;
   title: string;
-  done: boolean;
+  completed: boolean;
 };
 
 export enum FilterEnum {

@@ -23,8 +23,9 @@ const toDoList = createSlice({
       const titleTrim = action.payload.trim();
 
       const newTask: ToDoType = {
+        userID: 1,
         title: titleTrim,
-        done: false,
+        completed: false,
         id: Date.now(),
       };
 
@@ -36,7 +37,7 @@ const toDoList = createSlice({
     changeStatusTask: (state, action: PayloadAction<number>) => {
       state.toDoList.forEach((item) => {
         if (item.id === action.payload) {
-          item.done = !item.done;
+          item.completed = !item.completed;
         }
         return item;
       });

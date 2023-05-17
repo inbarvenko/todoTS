@@ -12,9 +12,9 @@ export const filteredToDoList = createSelector(
   (todo, filter) => {
     switch (filter) {
       case FilterEnum.active:
-        return todo.filter((item) => !item.done);
+        return todo.filter((item) => !item.completed);
       case FilterEnum.completed:
-        return todo.filter((item) => item.done);
+        return todo.filter((item) => item.completed);
       default:
         return todo;
     }

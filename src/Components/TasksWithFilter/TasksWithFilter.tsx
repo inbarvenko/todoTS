@@ -4,36 +4,7 @@ import TaskList from "../TaskList/TaskList";
 import { LocalStorageTools } from '../../localStorage';
 import { useAppSelector } from '../../redux/hooks';
 import { currentFilter } from '../../redux/selectors';
-import styled from 'styled-components';
-
-const TitileStyled = styled.p`
-  text-align: center;
-  padding-right: 5px;
-
-  @media screen and (max-width: 400px) {
-    font-size: 15px;
-  }
-`;
-
-const SelectorStyled = styled.div`
-  padding-top: 20px;
-  width: 100%;
-
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-`;
-
-const ContaineStyled = styled.div`
-  width: 100%;
-    
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content:space-evenly;
-
-  padding-bottom: 30px;
-`;
+import { TasksWithFilterWrapper } from './TasksWithFilterWrapper';
 
 
 const TasksWithFilter: React.FC = () => {
@@ -43,19 +14,18 @@ const TasksWithFilter: React.FC = () => {
     LocalStorageTools.setItemToLocalStorage('filter', selectedFilter);
   }, [selectedFilter])
 
-
   return (
-    <ContaineStyled>
-      <SelectorStyled>
-        <TitileStyled>
+    <TasksWithFilterWrapper>
+      <div className="filter">
+        <p className="filter__title">
           Filter of Tasks:
-        </TitileStyled>
+        </p>
         <Select
           value={selectedFilter}
         />
-      </SelectorStyled>
-      <TaskList />
-    </ContaineStyled>
+      </div>
+      <TaskList/>
+    </TasksWithFilterWrapper>
   )
 }
 

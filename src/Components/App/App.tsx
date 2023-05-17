@@ -6,39 +6,26 @@ import { currentToDoList } from "../../redux/selectors";
 import { LocalStorageTools } from "../../localStorage";
 import { addTask } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import styled, {createGlobalStyle} from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-  }
-`;
-
-const ComponentsStyled = styled.div`
-  font-family:'Montserrat', sans-serif;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content:space-evenly;
-
-  padding-bottom: 30px;
-`;
-
+import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
+import '../../styles/imports.css';
+import { ThemeProvider } from "styled-components";
+import { myTheme } from "../../styles/theme";
+import { getTodos } from "../../api/request";
 
 
 const App: React.FC = () => {
 
   const toDoList = useAppSelector(currentToDoList);
-
   const dispatch = useAppDispatch();
 
-  useEffect(() =>
-    LocalStorageTools.setItemToLocalStorage('todo', toDoList),
-    [toDoList]);
+  useEffect(() =>{
+    getTodos();
+    },
+    // LocalStorageTools.setItemToLocalStorage('todo', toDoList),
+    []);
 
   const activeTasks = useMemo(() => {
-    const arr = toDoList.filter((item) => !item.done);
+    const arr = toDoList.filter((item) => !item.completed);
     return arr.length;
   }, [toDoList]);
 
@@ -50,20 +37,24 @@ const App: React.FC = () => {
 
 
   return (
-    <ComponentsStyled>
-      <GlobalStyle/>
-      <TitleNumber
-        showText="How many tasks are active:"
-        showNum={activeTasks}
-      />
-      <InputForm
-        taskTitle=""
-        onClickSave={newTask}
-        buttonName="Add"
-      />
-      <TasksWithFilter
-      />
-    </ComponentsStyled>
+    <ThemeProvider theme={myTheme}>
+      <AppGlobalStyle />
+      <div className="global__container">
+        <h2 className="global__title">ToDo list</h2>
+        <AppWrapper>
+          <TitleNumber
+            showText="How many tasks are active:"
+            showNum={activeTasks}
+          />
+          <InputForm
+            taskTitle=""
+            onClickSave={newTask}
+            buttonName="Add"
+          />
+          <TasksWithFilter />
+        </AppWrapper>
+      </div>
+    </ThemeProvider>
   );
 }
 
