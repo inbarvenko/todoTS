@@ -34,6 +34,9 @@ const toDoList = createSlice({
     removeTask: (state, action: PayloadAction<number>) => {
       state.toDoList = state.toDoList.filter((t) => t.id !== action.payload);
     },
+    setList: (state, action: PayloadAction<ToDoType[]>) => {
+      state.toDoList = action.payload;
+    },
     changeStatusTask: (state, action: PayloadAction<number>) => {
       state.toDoList.forEach((item) => {
         if (item.id === action.payload) {
@@ -61,6 +64,7 @@ export const {
   changeFilter,
   addTask,
   removeTask,
+  setList,
   changeStatusTask,
   changeTitleTask,
 } = toDoList.actions;

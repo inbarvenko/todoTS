@@ -39,11 +39,7 @@ const Task : React.FC<Props> = (props) => {
 
   return (
     <TaskWrapper
-<<<<<<< HEAD
       isDone={props.task.completed}
-=======
-      isDone={props.task.done}
->>>>>>> 32a38da79e02ab58e739dd486983c698fa05a467
     >
       <input
         className="input"
