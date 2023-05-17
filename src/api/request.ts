@@ -15,6 +15,6 @@ export const getTodos = async () => {
       console.log(error.message);
     }
   }
-}
+};
 
 

@@ -11,7 +11,7 @@ const store = configureStore({
   },
   preloadedState: {
     todoData: {
-      toDoList: getTodos(),
+      toDoList: LocalStorageTools.getItemFromLocalStorage('todo', []),
       filter: LocalStorageTools.getItemFromLocalStorage('filter', FilterEnum.all)
     }
   },
