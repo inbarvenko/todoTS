@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ToDoType, FilterEnum } from '../types';
+import axios from 'axios';
+import { API_URL } from '../constants';
 
 type InitialState = {
   toDoList: ToDoType[];
@@ -30,9 +32,11 @@ const toDoList = createSlice({
       };
 
       state.toDoList.push(newTask);
+      axios.post(API_URL, state.toDoList).then(res => console.log(res.data));
     },
     removeTask: (state, action: PayloadAction<number>) => {
       state.toDoList = state.toDoList.filter((t) => t.id !== action.payload);
+      axios.post(API_URL, state.toDoList).then(res => console.log(res.data));
     },
     setList: (state, action: PayloadAction<ToDoType[]>) => {
       state.toDoList = action.payload;
@@ -41,6 +45,7 @@ const toDoList = createSlice({
       state.toDoList.forEach((item) => {
         if (item.id === action.payload) {
           item.completed = !item.completed;
+          // axios.put(`${API_URL}/${action.payload}`, item).then(res => console.log(res.data));
         }
         return item;
       });
@@ -52,6 +57,8 @@ const toDoList = createSlice({
       state.toDoList.forEach((item) => {
         if (item.id === action.payload.id) {
           item.title = action.payload.title.trim();
+          console.log(item)
+          // axios.put(`${API_URL}/${action.payload}`, item).then(res => console.log(res.data));
         }
         return item;
       });

@@ -3,18 +3,14 @@ import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
 import { currentToDoList } from "../../redux/selectors";
-import { LocalStorageTools } from "../../localStorage";
 import { addTask, setList } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
 import '../../styles/imports.css';
 import { ThemeProvider } from "styled-components";
 import { myTheme } from "../../styles/theme";
-import { getTodos } from "../../api/request";
 import axios from "axios";
-import { ToDoType } from "../../types";
-
-const API_URL = 'https://jsonplaceholder.typicode.com/users/1/todos';
+import { API_URL } from "../../constants";
 
 const App: React.FC = () => {
 
@@ -25,13 +21,17 @@ const App: React.FC = () => {
   useEffect(() => {
     let ignore = false;
     axios
-      .get(`${API_URL}`)
+      .get(API_URL)
       .then((result) => {
         if (!ignore) {
           const data = result.data;
           dispatch(setList(data));
         }
+      })
+      .catch( (error) => {
+        console.log(error);
       });
+
       return () => {
         ignore = true;
       };
