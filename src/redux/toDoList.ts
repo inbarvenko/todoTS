@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { ToDoType, FilterEnum } from '../types';
 import axios from 'axios';
 import { API_URL } from '../constants';
+import { addTodo, deleteTodo, updateTitleTodo } from '../api/todoApi';
 
 type InitialState = {
   toDoList: ToDoType[];
@@ -28,15 +29,17 @@ const toDoList = createSlice({
         userID: 1,
         title: titleTrim,
         completed: false,
+        body: '',
         id: Date.now(),
       };
 
       state.toDoList.push(newTask);
-      axios.post(API_URL, state.toDoList).then(res => console.log(res.data));
+      addTodo(newTask);
+      
     },
     removeTask: (state, action: PayloadAction<number>) => {
       state.toDoList = state.toDoList.filter((t) => t.id !== action.payload);
-      axios.post(API_URL, state.toDoList).then(res => console.log(res.data));
+      deleteTodo(action.payload);
     },
     setList: (state, action: PayloadAction<ToDoType[]>) => {
       state.toDoList = action.payload;
@@ -45,7 +48,6 @@ const toDoList = createSlice({
       state.toDoList.forEach((item) => {
         if (item.id === action.payload) {
           item.completed = !item.completed;
-          // axios.put(`${API_URL}/${action.payload}`, item).then(res => console.log(res.data));
         }
         return item;
       });
@@ -56,9 +58,9 @@ const toDoList = createSlice({
     ) => {
       state.toDoList.forEach((item) => {
         if (item.id === action.payload.id) {
-          item.title = action.payload.title.trim();
-          console.log(item)
-          // axios.put(`${API_URL}/${action.payload}`, item).then(res => console.log(res.data));
+          const newTitle = action.payload.title.trim();
+          item.title = newTitle;
+          updateTitleTodo(newTitle, item);
         }
         return item;
       });
