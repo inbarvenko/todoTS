@@ -22,21 +22,6 @@ const toDoList = createSlice({
     changeFilter: (state, action: PayloadAction<FilterEnum>) => {
       state.filter = action.payload;
     },
-    addTask: (state, action: PayloadAction<string>) => {
-      const titleTrim = action.payload.trim();
-
-      const newTask: ToDoType = {
-        userID: 1,
-        title: titleTrim,
-        completed: false,
-        body: '',
-        id: Date.now(),
-      };
-
-      state.toDoList.push(newTask);
-      addTodo(newTask);
-      
-    },
     removeTask: (state, action: PayloadAction<number>) => {
       state.toDoList = state.toDoList.filter((t) => t.id !== action.payload);
       deleteTodo(action.payload);
@@ -71,7 +56,6 @@ const toDoList = createSlice({
 export default toDoList.reducer;
 export const {
   changeFilter,
-  addTask,
   removeTask,
   setList,
   changeStatusTask,

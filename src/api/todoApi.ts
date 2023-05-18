@@ -1,13 +1,15 @@
 import { ToDoType } from "../types";
+
 import { axiosInstance } from "./request";
 
 export const getTodos = async () => {
+  console.log(axiosInstance);
   const res = await axiosInstance.get<ToDoType[]>('/');
   return res.data;
 }
 
-export const addTodo = async (item: ToDoType) => {
-  const res = await axiosInstance.post<ToDoType>('/', {...item});
+export const addTodo = async (title: string) => {
+  const res = await axiosInstance.post<ToDoType[]>('/', {title});
   return res.data;
 }
 
@@ -21,5 +23,6 @@ export const updateTitleTodo = async (property: string, item: ToDoType) => {
 
 export const deleteTodo = async (itemID: number) => {
   const res = await axiosInstance.delete<ToDoType>(`/${itemID}`);
-  return res;
+  const todos = await axiosInstance.get<ToDoType[]>('/');
+  return todos;
 }

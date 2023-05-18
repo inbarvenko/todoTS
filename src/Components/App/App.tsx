@@ -1,43 +1,45 @@
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
-import { currentFilter, currentToDoList } from "../../redux/selectors";
-import { addTask, setList } from "../../redux/toDoList";
+import { currentToDoList } from "../../redux/selectors";
+import { setList } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
 import '../../styles/imports.css';
 import { ThemeProvider } from "styled-components";
 import { myTheme } from "../../styles/theme";
-import { getTodos } from "../../api/todoApi";
-import { useSelector } from "react-redux";
+import { getTodos, addTodo } from "../../api/todoApi";
+import { ToDoType } from "../../types";
 
 const App: React.FC = () => {
 
   const toDoList = useAppSelector(currentToDoList);
-  const [preload, setPreload] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
       try {
         const res = await getTodos();
+
         dispatch(setList(res));
       } catch (err) {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [preload]);
+  }, []);
 
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.completed);
     return arr.length;
   }, [toDoList]);
 
-  const newTask = (title: string) => {
+  const newTask = async (title: string) => {
     if (!title.trim()) return;
 
-    dispatch(addTask(title));
+    const todos = await addTodo(title);
+    console.log(todos);
+    dispatch(setList(todos));
   };
 
 

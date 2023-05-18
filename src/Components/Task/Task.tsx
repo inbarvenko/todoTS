@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import { useAppDispatch } from "../../redux/hooks";
-import { changeTitleTask, changeStatusTask, removeTask } from "../../redux/toDoList";
+import { changeTitleTask, changeStatusTask, removeTask, setList } from "../../redux/toDoList";
 import { ToDoType } from "../../types";
 import { TaskWrapper } from "./TaskWrapper";
+import { deleteTodo } from "../../api/todoApi";
 
 
 interface Props {
@@ -34,7 +35,8 @@ const Task : React.FC<Props> = (props) => {
 
   const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    dispatch(removeTask(props.task.id));
+    const todos = deleteTodo(props.task.id);
+    // dispatch(setList(todos));
   }
 
   return (
