@@ -10,7 +10,6 @@ import '../../styles/imports.css';
 import { ThemeProvider } from "styled-components";
 import { myTheme } from "../../styles/theme";
 import { getTodos, addTodo } from "../../api/todoApi";
-import { ToDoType } from "../../types";
 
 const App: React.FC = () => {
 

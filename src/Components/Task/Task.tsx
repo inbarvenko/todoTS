@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import { useAppDispatch } from "../../redux/hooks";
-import { changeTitleTask, changeStatusTask, removeTask, setList } from "../../redux/toDoList";
+import { changeStatusTask, setList } from "../../redux/toDoList";
 import { ToDoType } from "../../types";
 import { TaskWrapper } from "./TaskWrapper";
-import { deleteTodo } from "../../api/todoApi";
+import { deleteTodo, updateTodo } from "../../api/todoApi";
 
 
 interface Props {
@@ -21,22 +21,24 @@ const Task : React.FC<Props> = (props) => {
     setEdit(!edit);
   }
 
-  const changeTitle = (title: string) => {
+  const changeTitle = async (title: string) => {
     const titleTrim = title.trim();
     if (titleTrim) {
-      dispatch(changeTitleTask({ id: props.task.id, title: titleTrim }));
+      const todos = await updateTodo(titleTrim, props.task._id, props.task.completed);
+      dispatch(setList(todos));
     }
     editTask();
   }
 
-  const doneTask = () => {
-    dispatch(changeStatusTask(props.task.id));
+  const doneTask = async () => {
+    const todos = await updateTodo(props.task.title, props.task._id, !props.task.completed);
+    dispatch(setList(todos));
   }
 
-  const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    const todos = deleteTodo(props.task.id);
-    // dispatch(setList(todos));
+    const todos = await deleteTodo(props.task._id);
+    dispatch(setList(todos));
   }
 
   return (

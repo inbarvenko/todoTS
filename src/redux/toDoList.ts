@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ToDoType, FilterEnum } from '../types';
-import axios from 'axios';
-import { API_URL } from '../constants';
-import { addTodo, deleteTodo, updateTitleTodo } from '../api/todoApi';
 
 type InitialState = {
   toDoList: ToDoType[];
@@ -22,30 +19,13 @@ const toDoList = createSlice({
     changeFilter: (state, action: PayloadAction<FilterEnum>) => {
       state.filter = action.payload;
     },
-    removeTask: (state, action: PayloadAction<number>) => {
-      state.toDoList = state.toDoList.filter((t) => t.id !== action.payload);
-      deleteTodo(action.payload);
-    },
     setList: (state, action: PayloadAction<ToDoType[]>) => {
       state.toDoList = action.payload;
     },
     changeStatusTask: (state, action: PayloadAction<number>) => {
       state.toDoList.forEach((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           item.completed = !item.completed;
-        }
-        return item;
-      });
-    },
-    changeTitleTask: (
-      state,
-      action: PayloadAction<{ id: number; title: string }>
-    ) => {
-      state.toDoList.forEach((item) => {
-        if (item.id === action.payload.id) {
-          const newTitle = action.payload.title.trim();
-          item.title = newTitle;
-          updateTitleTodo(newTitle, item);
         }
         return item;
       });
@@ -56,8 +36,6 @@ const toDoList = createSlice({
 export default toDoList.reducer;
 export const {
   changeFilter,
-  removeTask,
   setList,
   changeStatusTask,
-  changeTitleTask,
 } = toDoList.actions;

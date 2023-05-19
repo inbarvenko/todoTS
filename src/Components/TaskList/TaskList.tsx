@@ -16,7 +16,7 @@ const TaskList:React.FC = () => {
         filteredToDos.map((item) => {
           return <Task
             task={item}
-            key={item.id} />
+            key={item._id} />
         })
         : <p className="explanations">No tasks</p>
       }
