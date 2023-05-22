@@ -6,7 +6,6 @@ export const  currentToDoList = (state : RootState) => state.todoData.toDoList;
 
 export const currentFilter = (state : RootState) => state.todoData.filter;
 
- 
 // export const filteredToDoList = createSelector(
 //   [currentToDoList, currentFilter],
 //   (todo, filter) => {

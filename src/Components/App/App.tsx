@@ -3,7 +3,7 @@ import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
 import { currentFilter, currentToDoList } from "../../redux/selectors";
-import { setList } from "../../redux/toDoList";
+import { addTask, setList } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
 import '../../styles/imports.css';
@@ -27,7 +27,7 @@ const App: React.FC = () => {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [filter]);
+  }, [toDoList.length, filter]);
 
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.completed);
@@ -37,8 +37,8 @@ const App: React.FC = () => {
   const newTask = async (title: string) => {
     if (!title.trim()) return;
 
-    const todos = await addTodo(title);
-    dispatch(setList(todos));
+    const requestStatus = await addTodo(title);
+    if(requestStatus) dispatch(addTask(title));
   };
 
 
