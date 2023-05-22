@@ -22,14 +22,6 @@ const toDoList = createSlice({
     setList: (state, action: PayloadAction<ToDoType[]>) => {
       state.toDoList = action.payload;
     },
-    changeStatusTask: (state, action: PayloadAction<number>) => {
-      state.toDoList.forEach((item) => {
-        if (item._id === action.payload) {
-          item.completed = !item.completed;
-        }
-        return item;
-      });
-    },
   }
 });
 
@@ -37,5 +29,4 @@ export default toDoList.reducer;
 export const {
   changeFilter,
   setList,
-  changeStatusTask,
 } = toDoList.actions;

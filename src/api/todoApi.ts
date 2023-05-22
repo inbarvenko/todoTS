@@ -2,13 +2,19 @@ import { ToDoType } from "../types";
 
 import { axiosInstance } from "./request";
 
-export const getTodos = async () => {
-  const res = await axiosInstance.get<ToDoType[]>('/');
+export const getTodos = async (filter: string) => {
+  const res = await axiosInstance.get<ToDoType[]>('/',
+    {
+      params: { 
+        filter, 
+      }
+    });
+
   return res.data;
 }
 
 export const addTodo = async (title: string) => {
-  const res = await axiosInstance.post<ToDoType[]>('/', {title});
+  const res = await axiosInstance.post<ToDoType[]>('/', { title });
   return res.data;
 }
 

@@ -1,13 +1,13 @@
 import React from "react";
 import Task from "../Task/Task";
 import { useSelector } from "react-redux";
-import { filteredToDoList } from "../../redux/selectors";
+import { currentToDoList } from "../../redux/selectors";
 import { TaskListWrapper } from "./TaskListWrapper";
 
 
 const TaskList:React.FC = () => {
 
-  const filteredToDos = useSelector(filteredToDoList);
+  const filteredToDos = useSelector(currentToDoList);
 
   return (
     <TaskListWrapper>
