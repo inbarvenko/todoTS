@@ -20,6 +20,7 @@ const TasksWithFilter: React.FC = () => {
         />
       </div>
       <TaskList/>
+      
     </TasksWithFilterWrapper>
   )
 }

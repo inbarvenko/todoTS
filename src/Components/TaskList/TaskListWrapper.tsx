@@ -29,4 +29,14 @@ export const TaskListWrapper = styled.ul`
       margin-right: ${props => props.theme.phone.marginHorizontal};
     }
   }
+
+  .buttonsContainer{
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;

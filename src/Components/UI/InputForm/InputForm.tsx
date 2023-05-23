@@ -19,8 +19,8 @@ const InputForm: React.FC<Props> = (props) => {
 
   const [title, setTitle] = useState(props.taskTitle);
 
-  const saveTaskTitle = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const saveTaskTitle = (param: React.MouseEvent<HTMLButtonElement>) => {
+    param.preventDefault();
 
     props.onClickSave(title);
     setTitle('');

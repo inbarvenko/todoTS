@@ -3,8 +3,9 @@ import { ButtonWrapper } from './ButtonWrapper';
 
 interface Props {
   title: string;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>, parametr?: number) => void ;
   isButtonDisabled?: boolean;
+  parametr?: number;
 }
 
 const Button: React.FC<Props> = (props) => {

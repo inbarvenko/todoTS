@@ -8,6 +8,8 @@ export const ButtonWrapper = styled.button<{isButtonDisabled?: boolean}>`
   margin-right: 15px;
   margin-left: 15px;
 
+  cursor: pointer;
+
   background-color: ${props => props.theme.colors.button__color};
 
   display: ${(props) => props.isButtonDisabled ? 'none' : 'display'};
