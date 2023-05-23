@@ -1,9 +1,12 @@
-import { ToDoType } from "../types";
+import { FilterEnum, ToDoType } from "../types";
 
 import { axiosInstance } from "./request";
 
-export const getTodos = async () => {
-  const res = await axiosInstance.get<ToDoType[]>('/');
+export const getTodos = async (filter:FilterEnum) => {
+  console.log(filter);
+
+  const res = await axiosInstance.get<ToDoType[]>('/', {data: {filter}});
+  console.log(res)
   return res.data;
 }
 

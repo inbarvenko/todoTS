@@ -2,7 +2,7 @@ import { useMemo, useEffect } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
-import { currentToDoList } from "../../redux/selectors";
+import { currentFilter, currentToDoList } from "../../redux/selectors";
 import { setList } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
@@ -14,19 +14,20 @@ import { getTodos, addTodo } from "../../api/todoApi";
 const App: React.FC = () => {
 
   const toDoList = useAppSelector(currentToDoList);
+  const filter = useAppSelector(currentFilter);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await getTodos();
+        const res = await getTodos(filter);
 
         dispatch(setList(res));
       } catch (err) {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, []);
+  }, [toDoList.length, filter]);
 
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.completed);

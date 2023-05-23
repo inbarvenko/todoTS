@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import { useAppDispatch } from "../../redux/hooks";
-import { changeStatusTask, setList } from "../../redux/toDoList";
+import { setList } from "../../redux/toDoList";
 import { ToDoType } from "../../types";
 import { TaskWrapper } from "./TaskWrapper";
 import { deleteTodo, updateTodo } from "../../api/todoApi";
