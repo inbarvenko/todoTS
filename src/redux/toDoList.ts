@@ -8,6 +8,7 @@ type InitialState = {
   pages: number[];
   currentPage: number;
   activeTasks: number;
+  changeTodo: boolean;
 }
 
 const initialState: InitialState = {
@@ -16,6 +17,7 @@ const initialState: InitialState = {
   pages: [1],
   currentPage: 1,
   activeTasks: 0,
+  changeTodo: false,
 }
 
 const toDoList = createSlice({
@@ -24,6 +26,9 @@ const toDoList = createSlice({
   reducers: {
     changeFilter: (state, action: PayloadAction<FilterEnum>) => {
       state.filter = action.payload;
+    },
+    todolistChanging: (state) => {
+      state.changeTodo = !state.changeTodo
     },
     setList: (
       state, 
@@ -39,20 +44,6 @@ const toDoList = createSlice({
       },
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
-    },
-    addTask: (state, action: PayloadAction<string>) => {
-      const titleTrim = action.payload.trim();
-
-      const newTask: ToDoType = {
-        title: titleTrim,
-        completed: false,
-        _id: Date.now(),
-      };
-
-      state.toDoList.push(newTask);
-    },
-    removeTask: (state, action: PayloadAction<number>) => {
-      state.toDoList = state.toDoList.filter((t) => t._id !== action.payload);
     },
     changeStatusTask: (state, action: PayloadAction<number>) => {
       state.toDoList.forEach((item) => {
@@ -79,10 +70,9 @@ const toDoList = createSlice({
 export default toDoList.reducer;
 export const {
   changeFilter,
-  addTask,
+  todolistChanging,
   setCurrentPage,
   setList,
-  removeTask,
   changeStatusTask,
   changeTitleTask,
 } = toDoList.actions;

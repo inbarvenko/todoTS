@@ -1,8 +1,8 @@
 import React from "react";
 import { FILTER_OPTIONS } from "../../../constants";
 import { FilterEnum } from "../../../types";
-import { useAppDispatch } from "../../../redux/hooks";
-import { changeFilter } from "../../../redux/toDoList";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { changeFilter, setCurrentPage } from "../../../redux/toDoList";
 import { SelectWrapper } from "./SelectWrapper";
 
 
@@ -15,6 +15,9 @@ const Select: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
   const stringToFilterEnum = (str: string) => {
+
+    dispatch(setCurrentPage(1));
+
     switch (str) {
       case FilterEnum.active:
         return dispatch(changeFilter(FilterEnum.active));

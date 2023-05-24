@@ -2,28 +2,29 @@ import { useMemo, useEffect } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
-import { currentFilter, currentPage, currentToDoList, numberOfActiveTasks } from "../../redux/selectors";
-import { addTask, setList } from "../../redux/toDoList";
+import { setList, todolistChanging } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
 import '../../styles/imports.css';
 import { ThemeProvider } from "styled-components";
 import { myTheme } from "../../styles/theme";
 import { getTodos, addTodo } from "../../api/todoApi";
+import { getActiveTasksOnPage } from "../../redux/selectors";
 
 const App: React.FC = () => {
 
-  const toDoList = useAppSelector(currentToDoList);
-  const filter = useAppSelector(currentFilter);
-  const curPage = useAppSelector(currentPage);
-  const activeTasks = useAppSelector(numberOfActiveTasks);
+  const changeToDoList = useAppSelector((state) => state.todoData.changeTodo);
+  const filter = useAppSelector((state) => state.todoData.filter);
+  const curPage = useAppSelector((state) => state.todoData.currentPage);
+  const activeTasks = useAppSelector((state) => state.todoData.activeTasks);
+  const activeTasksOnPage = useAppSelector(getActiveTasksOnPage);
   const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     (async () => {
       try {
         const res = await getTodos(filter, curPage);
-        console.log("I recompiled!")
         dispatch(setList({
           todos: res.todos,
           numberOfPages: res.pages,
@@ -33,14 +34,14 @@ const App: React.FC = () => {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [toDoList.length, filter, curPage]);
+  }, [changeToDoList, filter, curPage, activeTasksOnPage]);
 
   const newTask = async (title: string) => {
     if (!title.trim()) return;
 
     try {
-      const requestStatus = await addTodo(title);
-      if (requestStatus) dispatch(addTask(title));
+      await addTodo(title);
+      dispatch(todolistChanging());
     }
     catch (err) {
       console.log(`Error! Unable to make a new task! ${err}`);

@@ -9,6 +9,8 @@ export const myTheme: DefaultTheme = {
   colors: {
     button__border: ' #f8bfb3',
     button__color: '#ffd3c9',
+    button__active: '#ffb29f',
+    button__active__border: '#ff7d6c',
     phone__background: `#fdefec`,
     title__number: 'rgb(252, 141, 113);',
     input: '#fffaf9',

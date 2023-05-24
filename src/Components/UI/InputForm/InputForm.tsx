@@ -19,12 +19,16 @@ const InputForm: React.FC<Props> = (props) => {
 
   const [title, setTitle] = useState(props.taskTitle);
 
-  const saveTaskTitle = (param: React.MouseEvent<HTMLButtonElement>) => {
-    param.preventDefault();
-
+  const saveTaskTitle = (event: React.MouseEvent<HTMLButtonElement>) => {
     props.onClickSave(title);
     setTitle('');
   };
+
+  const enterSaveTask = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    props.onClickSave(title);
+    setTitle('');
+  }
 
   const changingTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -32,12 +36,12 @@ const InputForm: React.FC<Props> = (props) => {
 
   const returnValue = () => {
     props.onClickSave('');
-  }
-
+  } 
 
   return (
     <InputFormWrapper
-      buttonType = {buttonType}
+      buttonType={buttonType}
+      onSubmit={enterSaveTask}
     >
       <input
         className='inputForm'
@@ -46,6 +50,7 @@ const InputForm: React.FC<Props> = (props) => {
         value={title}
         onChange={changingTitle}
         onBlur={returnValue}
+
       ></input>
       <Button
         isButtonDisabled={props.isButtonDisabled}

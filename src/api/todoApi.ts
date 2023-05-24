@@ -17,26 +17,19 @@ export const getTodos = async (filter: string, currentPage: number) => {
       }
     });
 
-    console.log(res.data);
   return res.data;
 }
 
-export const addTodo = async (title: string) => {
-  const res = await axiosInstance.post<ToDoType[]>('/', { title });
-  if (res.statusText === 'OK') return true;
-  return false;
+export const addTodo = (title: string) => {
+  return axiosInstance.post<ToDoType>('/', { title });
 }
 
-export const updateTodo = async (item: ToDoType) => {
-  const res = await axiosInstance.patch<ToDoType[]>('/', item);
-  if (res.statusText === 'OK') return true;
-  return false;
+export const updateTodo = (item: ToDoType) => {
+ return axiosInstance.patch<ToDoType>('/', item);
 }
 
-export const deleteTodo = async (itemID: number) => {
-  const res = await axiosInstance.delete<ToDoType[]>('/', {
+export const deleteTodo = (itemID: number) => {
+  return axiosInstance.delete<ToDoType>('/', {
     data: { _id: itemID },
   });
-  if (res.statusText === 'OK') return true;
-  return false;
 }

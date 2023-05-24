@@ -13,6 +13,8 @@ declare module 'styled-components' {
     colors: {
       button__border: string,
       button__color: string,
+      button__active: string,
+      button__active__border: string,
       phone__background: string,
       title__number: string,
       input: string,

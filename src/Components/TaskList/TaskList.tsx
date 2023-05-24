@@ -1,22 +1,25 @@
 import React from "react";
 import Task from "../Task/Task";
-import { currentToDoList, numberOfPages } from "../../redux/selectors";
 import { TaskListWrapper } from "./TaskListWrapper";
 import Button from "../UI/Button/Button";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setCurrentPage } from "../../redux/toDoList";
+import { filteredToDoList } from "../../redux/selectors";
 
 
 const TaskList: React.FC = () => {
 
-  const toDoList = useAppSelector(currentToDoList);
-  const pages = useAppSelector(numberOfPages);
+  const toDoList = useAppSelector((state) => state.todoData.toDoList);
+  const pages = useAppSelector((state) => state.todoData.pages);
+  const currentPage = useAppSelector((state) => state.todoData.currentPage);
   const dispatch = useAppDispatch();
 
   const changeCurrentPage = (event: React.MouseEvent<HTMLButtonElement>, parametr: number) => {
-    event.preventDefault();
-    dispatch(setCurrentPage(parametr));
+    if(parametr !== currentPage){
+      dispatch(setCurrentPage(parametr));
+    }
   }
+
 
   return (
     <TaskListWrapper>
@@ -26,6 +29,7 @@ const TaskList: React.FC = () => {
           return (
             <Task
               task={item}
+              // onChange = {triggerRerenderList}
               key={item._id}
             />
           )
@@ -38,6 +42,8 @@ const TaskList: React.FC = () => {
             <Button
               title={page.toString()}
               onClick={(e) => changeCurrentPage(e, page)}
+              isButtonActive={(page === currentPage)}
+              key={page}
             />
           )
         })}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
-import { useAppDispatch } from "../../redux/hooks";
-import { changeStatusTask, changeTitleTask, removeTask, setList } from "../../redux/toDoList";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { changeStatusTask, changeTitleTask, todolistChanging } from "../../redux/toDoList";
 import { ToDoType } from "../../types";
 import { TaskWrapper } from "./TaskWrapper";
 import { deleteTodo, updateTodo } from "../../api/todoApi";
@@ -26,17 +26,15 @@ const Task: React.FC<Props> = (props) => {
     const titleTrim = title.trim();
     try {
       if (titleTrim) {
-        const requestStatus = await updateTodo({
+        await updateTodo({
           title: titleTrim,
           _id: props.task._id,
           completed: props.task.completed
         });
-        if (requestStatus) {
-          dispatch(changeTitleTask({
-            _id: props.task._id,
-            title: titleTrim
-          }));
-        }
+        dispatch(changeTitleTask({
+          _id: props.task._id,
+          title: titleTrim
+        }));
       }
     }
     catch (err) {
@@ -48,14 +46,13 @@ const Task: React.FC<Props> = (props) => {
 
   const doneTask = async () => {
     try {
-      const requestStatus = await updateTodo({
+      await updateTodo({
         title: props.task.title,
         _id: props.task._id,
         completed: !props.task.completed
       });
-      if (requestStatus) {
-        dispatch(changeStatusTask(props.task._id));
-      }
+
+      dispatch(changeStatusTask(props.task._id));
     }
     catch (err) {
       console.log(`Error! Unable to change status of task! ${err}`);
@@ -64,11 +61,9 @@ const Task: React.FC<Props> = (props) => {
 
   const onButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     try {
-      event.preventDefault();
-      const requestStatus = await deleteTodo(props.task._id);
-      if (requestStatus) {
-        dispatch(removeTask(props.task._id));
-      }
+      await deleteTodo(props.task._id);
+      dispatch(todolistChanging());
+
     }
     catch (err) {
       console.log(`Error! Unable to delete a task! ${err}`);
