@@ -9,7 +9,6 @@ type InitialState = {
   pages: number[];
   currentPage: number;
   activeTasks: number;
-  changeTodo: boolean;
 }
 
 const initialState: InitialState = {
@@ -18,7 +17,6 @@ const initialState: InitialState = {
   pages: [1],
   currentPage: 1,
   activeTasks: 0,
-  changeTodo: false,
 }
 
 const toDoList = createSlice({
@@ -27,9 +25,6 @@ const toDoList = createSlice({
   reducers: {
     changeFilter: (state, action: PayloadAction<FilterEnum>) => {
       state.filter = action.payload;
-    },
-    todolistChanging: (state) => {
-      state.changeTodo = !state.changeTodo
     },
     setList: (
       state, 
@@ -86,7 +81,6 @@ const toDoList = createSlice({
 export default toDoList.reducer;
 export const {
   changeFilter,
-  todolistChanging,
   setCurrentPage,
   setList,
   changeStatusTask,

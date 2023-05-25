@@ -2,7 +2,7 @@ import { useMemo, useEffect } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
-import { setList, todolistChanging } from "../../redux/toDoList";
+import { setList } from "../../redux/toDoList";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { AppGlobalStyle, AppWrapper } from "./AppWrapper";
 import '../../styles/imports.css';
@@ -13,7 +13,6 @@ import { getActiveTasksOnPage } from "../../redux/selectors";
 
 const App: React.FC = () => {
 
-  const changeToDoList = useAppSelector((state) => state.todoData.changeTodo);
   const filter = useAppSelector((state) => state.todoData.filter);
   const currentPage = useAppSelector((state) => state.todoData.currentPage);
   const activeTasks = useAppSelector((state) => state.todoData.activeTasks);
@@ -28,14 +27,14 @@ const App: React.FC = () => {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [changeToDoList, filter, currentPage, activeTasksOnPage]);
+  }, [filter, currentPage, activeTasksOnPage]);
 
   const newTask = async (title: string) => {
     if (!title.trim()) return;
 
     try {
       await addTodo(title);
-      dispatch(todolistChanging());
+      await dispatch(getTodos({filter, currentPage}))
     }
     catch (err) {
       console.log(`Error! Unable to make a new task! ${err}`);

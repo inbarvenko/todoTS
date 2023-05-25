@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { changeStatusTask, changeTitleTask, todolistChanging } from "../../redux/toDoList";
+import { changeStatusTask, changeTitleTask } from "../../redux/toDoList";
 import { ToDoType } from "../../types";
 import { TaskWrapper } from "./TaskWrapper";
-import { deleteTodo, updateTodo } from "../../api/todoApi";
+import { deleteTodo, getTodos, updateTodo } from "../../api/todoApi";
 
 
 interface Props {
@@ -16,6 +16,9 @@ const Task: React.FC<Props> = (props) => {
   const [edit, setEdit] = useState(false);
 
   const dispatch = useAppDispatch();
+  const filter = useAppSelector((state) => state.todoData.filter)
+  const currentPage = useAppSelector((state) => state.todoData.currentPage)
+
 
   const editTask = () => {
     setEdit(!edit);
@@ -62,7 +65,7 @@ const Task: React.FC<Props> = (props) => {
   const onButtonClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     try {
       await deleteTodo(props.task._id);
-      dispatch(todolistChanging());
+      await dispatch(getTodos({filter, currentPage}))
 
     }
     catch (err) {
