@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ToDoType, FilterEnum } from '../types';
+import { getTodos } from '../api/todoApi'
 
 type InitialState = {
   toDoList: ToDoType[];
@@ -64,6 +65,21 @@ const toDoList = createSlice({
         return item;
       });
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getTodos.fulfilled, (state, action) => {
+      try{
+        state.pages = action.payload.pages;
+        state.toDoList = action.payload.todos;
+        state.activeTasks = action.payload.activeTasks;
+      }
+      catch(err){
+        console.log(`Error! Unable to get todos! ${err}`);
+      }
+    }),
+    builder.addCase(getTodos.rejected, (state, action) => {
+      console.log(`Error! Unable to get todos!`);
+    })
   }
 });
 

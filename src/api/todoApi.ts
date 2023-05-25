@@ -1,4 +1,5 @@
 import { ToDoType } from "../types";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { axiosInstance } from "./request";
 
@@ -8,24 +9,31 @@ type ResponseTodo = {
   activeTasks: number,
 }
 
-export const getTodos = async (filter: string, currentPage: number) => {
-  const res = await axiosInstance.get<ResponseTodo>('/',
-    {
-      params: {
-        filter,
-        currentPage,
-      }
-    });
-
-  return res.data;
+type Params = {
+  filter: string,
+  currentPage: number,
 }
+
+export const getTodos = createAsyncThunk('todos/getTodos',
+  async (arg: Params, thunkAPI) => {
+    const res = await axiosInstance.get<ResponseTodo>('/',
+      {
+        params: {
+          filter: arg.filter,
+          currentPage: arg.currentPage,
+        }
+      });
+
+    return res?.data;
+  }
+)
 
 export const addTodo = (title: string) => {
   return axiosInstance.post<ToDoType>('/', { title });
 }
 
 export const updateTodo = (item: ToDoType) => {
- return axiosInstance.patch<ToDoType>('/', item);
+  return axiosInstance.patch<ToDoType>('/', item);
 }
 
 export const deleteTodo = (itemID: number) => {

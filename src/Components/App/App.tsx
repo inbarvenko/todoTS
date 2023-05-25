@@ -15,26 +15,20 @@ const App: React.FC = () => {
 
   const changeToDoList = useAppSelector((state) => state.todoData.changeTodo);
   const filter = useAppSelector((state) => state.todoData.filter);
-  const curPage = useAppSelector((state) => state.todoData.currentPage);
+  const currentPage = useAppSelector((state) => state.todoData.currentPage);
   const activeTasks = useAppSelector((state) => state.todoData.activeTasks);
   const activeTasksOnPage = useAppSelector(getActiveTasksOnPage);
   const dispatch = useAppDispatch();
 
-
   useEffect(() => {
     (async () => {
       try {
-        const res = await getTodos(filter, curPage);
-        dispatch(setList({
-          todos: res.todos,
-          numberOfPages: res.pages,
-          activeTasks: res.activeTasks,
-        }));
+        await dispatch(getTodos({filter, currentPage}))
       } catch (err) {
         console.log(`Error! Unable to get todos! ${err}`);
       }
     })();
-  }, [changeToDoList, filter, curPage, activeTasksOnPage]);
+  }, [changeToDoList, filter, currentPage, activeTasksOnPage]);
 
   const newTask = async (title: string) => {
     if (!title.trim()) return;
