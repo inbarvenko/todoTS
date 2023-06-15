@@ -61,7 +61,7 @@ const toDoList = createSlice({
       });
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder) => { 
     builder.addCase(getTodos.fulfilled, (state, action) => {
       try{
         state.pages = action.payload.pages;
@@ -71,10 +71,11 @@ const toDoList = createSlice({
       catch(err){
         console.log(`Error! Unable to get todos! ${err}`);
       }
-    }),
+    });
+
     builder.addCase(getTodos.rejected, (state, action) => {
       console.log(`Error! Unable to get todos!`);
-    })
+    });
   }
 });
 
