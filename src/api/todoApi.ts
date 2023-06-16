@@ -33,12 +33,20 @@ export const addTodo = (title: string) => {
 }
 
 export const updateTodo = (item: ToDoType) => {
-  return axiosInstance.patch<ToDoType>('/', item);
+  return axiosInstance.put<ToDoType>('/', 
+    {item:
+      {
+        id: item._id,
+        title: item.title,
+        completed: item.completed
+      }
+    }
+  );
 }
 
 export const deleteTodo = (itemID: number) => {
   console.log(itemID)
   return axiosInstance.delete<ToDoType>('/', {
-    data: { _id: itemID },
+    data: { id: itemID },
   });
 }
